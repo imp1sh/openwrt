@@ -70,6 +70,24 @@ for bridgename in bridgelist:
 # handle tap interfaces, destroy or create
 if action=="create":
     open("currentnetwork.txt", "w").close()
+    # gateways
+    for (i, gateway) in enumerate(gatewaybridges):
+        for (j, bridge) in enumerate(gateway):
+            if j==0:
+                gatewayname=gatewaybridges[i][j]
+                continue
+            # create new tap
+            returntapcreate=subprocess.run(["sudo", "ifconfig", "tap", "create"], stdout=subprocess.PIPE)
+            tapinterface=returntapcreate.stdout.decode('utf-8')
+            tapinterface=tapinterface.rstrip()
+            # assign tap to bridge
+            shellbridgetap="sudo ifconfig {0} addm {1}".format(gatewaybridges[i][j],tapinterface)
+            # write into file what has been done
+            with open("currentnetwork.txt", "a") as currentfile:
+                fileline="{0} has {1} on {2}\n".format(gatewayname,tapinterface,gatewaybridges[i][j])
+                currentfile.write(fileline)
+            os.system(shellbridgetap)
+    # nodes
     for (i, node) in enumerate(nodebridges):
         for (j, bridge) in enumerate(node):
             #print(i,j,bridge)
@@ -99,3 +117,5 @@ elif action=="destroy":
         os.system(shelltap)
     # empty file after tap and bridge are deleted
     open("currentnetwork.txt", "w").close()
+# example line for creating real interface
+# sudo ifconfig em0.10 create vlan 10 vlandev em0 name iflcwan
