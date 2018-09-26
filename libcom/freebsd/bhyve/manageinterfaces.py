@@ -7,10 +7,10 @@ import sys
 # specify interfaces that need real interface connectivity with vlan tagging
 # 0 interface name 1 parent interface name 2 vlan id 3 bridge name
 realinterfaces=[
-        ['iflcwan', 'em0', 10, 'bridge8'],
-        ['iflcadm', 'em0', 300, 'bridge7'],
-        ['iflcn4', 'em0', 200, 'bridge2'],
-        ['iflcn5', 'em0', 201, 'bridge1']]
+        ['iflcwan', 'em0', "10", 'bridge8'],
+        ['iflcadm', 'em0', "300", 'bridge7'],
+        ['iflcn4', 'em0', "200", 'bridge2'],
+        ['iflcn5', 'em0', "201", 'bridge1']]
 # specify to which bridges a guest should be connected.
 gatewaybridges=[['g0','bridge1','bridge2','bridge3','bridge4','bridge5','bridge6']]
 # first element with index [0] is node0 so keep that in mind.
@@ -105,7 +105,23 @@ if action=="create":
                 fileline="{0} has {1} on {2}\n".format(nodename,tapinterface,nodebridges[i][j])
                 currentfile.write(fileline)
             os.system(shellbridgetap)
+    # real interfaces
+    for (i, interface) in enumerate(realinterfaces):
+        vlanif=realinterfaces[i][1]+"."+realinterfaces[i][2]
+        shellrealif="sudo ifconfig {0} create vlan {1} vlandev {2} name {3}".format(vlanif,realinterfaces[i][2],realinterfaces[i][1],realinterfaces[i][0])
+        returntapcreate=subprocess.run(["sudo", "ifconfig", "tap", "create"], stdout=subprocess.PIPE)
+        tapinterface=returntapcreate.stdout.decode('utf-8')
+        tapinterface=tapinterface.rstrip()
+        shellrealbridge="sudo ifconfig {0} addm {1}".format(realinterfaces[i][3],realinterfaces[i][0])
+        os.system(shellrealif)
+        os.system(shellrealbridge)
+        # example line for creating real interface
+        # sudo ifconfig em0.10 create vlan 10 vlandev em0 name iflcwan
+        with open("currentnetwork.txt", "a") as currentfile:
+            fileline="host has {0} on {1}\n".format(realinterfaces[i][0],realinterfaces[i][3])
+            currentfile.write(fileline)
 elif action=="destroy":
+    # tap destroy
     taplist=[]
     with open("currentnetwork.txt") as currentfile:
         for line in currentfile:
@@ -115,7 +131,6 @@ elif action=="destroy":
     for tapname in taplist:
         shelltap="sudo ifconfig {0} destroy".format(tapname)
         os.system(shelltap)
+    # missing: realif destroy
     # empty file after tap and bridge are deleted
     open("currentnetwork.txt", "w").close()
-# example line for creating real interface
-# sudo ifconfig em0.10 create vlan 10 vlandev em0 name iflcwan
