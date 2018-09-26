@@ -5,7 +5,7 @@ if [ $# -eq 0 ]; then
 	exit 1
 fi
 maxbridge="40"
-maxtap="100"
+maxtap="200"
 source bridgetaprel.bash
 if [ $1 == "create" ]; then
 	> currentnetwork
@@ -36,7 +36,7 @@ if [ $1 == "create" ]; then
 	# ifconfig bridge6 addm <<eingelesenen Wert>>
 	# könnte sein ifconfig bridge6 addm tap1
 	# configure real interfaces
-	for realinterface in ${realinterfaces[*]}; do
+        for realinterface in ${realinterfaces[*]}; do
 		# realinterface is in this example ffwan
 		# $ffwan[0] is parent interface, in this example em0
 		# $ffwan[1] is vlan id, in this example 10
