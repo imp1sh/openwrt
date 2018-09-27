@@ -43,6 +43,7 @@ nodebridges=[
 # end config
 
 # action can be create or destroy
+print("Collecting bridges")
 action=sys.argv[1]
 if (action!="create") and (action!="destroy"):
     print("Please give either create or destroy as parameter.")
@@ -63,6 +64,7 @@ for (i, gateway) in enumerate(gatewaybridges):
         bridgelist.append(gatewaybridges[i][j])
 #print(sorted(set(bridgelist)))
 # handle bridges, destroy or create
+print("Preparing bridges for...")
 bridgelist=sorted(set(bridgelist))
 for bridgename in bridgelist:
     shellbridge="sudo ifconfig {0} {1}".format(bridgename,action)
@@ -71,6 +73,7 @@ for bridgename in bridgelist:
 if action=="create":
     open("currentnetwork.txt", "w").close()
     # gateways
+    print("Gateways")
     for (i, gateway) in enumerate(gatewaybridges):
         for (j, bridge) in enumerate(gateway):
             if j==0:
@@ -88,6 +91,7 @@ if action=="create":
                 currentfile.write(fileline)
             os.system(shellbridgetap)
     # nodes
+    print("Nodes")
     for (i, node) in enumerate(nodebridges):
         for (j, bridge) in enumerate(node):
             #print(i,j,bridge)
@@ -106,12 +110,10 @@ if action=="create":
                 currentfile.write(fileline)
             os.system(shellbridgetap)
     # real interfaces
+    print("Real Interfaces")
     for (i, interface) in enumerate(realinterfaces):
         vlanif=realinterfaces[i][1]+"."+realinterfaces[i][2]
         shellrealif="sudo ifconfig {0} create vlan {1} vlandev {2} name {3}".format(vlanif,realinterfaces[i][2],realinterfaces[i][1],realinterfaces[i][0])
-        returntapcreate=subprocess.run(["sudo", "ifconfig", "tap", "create"], stdout=subprocess.PIPE)
-        tapinterface=returntapcreate.stdout.decode('utf-8')
-        tapinterface=tapinterface.rstrip()
         shellrealbridge="sudo ifconfig {0} addm {1}".format(realinterfaces[i][3],realinterfaces[i][0])
         os.system(shellrealif)
         os.system(shellrealbridge)
@@ -121,6 +123,7 @@ if action=="create":
             fileline="host has {0} on {1}\n".format(realinterfaces[i][0],realinterfaces[i][3])
             currentfile.write(fileline)
 elif action=="destroy":
+    print("Destroying tap devices")
     # tap destroy
     taplist=[]
     with open("currentnetwork.txt") as currentfile:
