@@ -33,7 +33,7 @@
 
 	chosen {
 		bootargs = "console=ttyMSM0,115200n8";
-		linux,stdout-path = "serial0:115200n8";
+		stdout-path = "serial0:115200n8";
 		append-rootblock = "ubi.mtd=";  /* append to bootargs adding the root deviceblock nbr from bootloader */
 	};
 
@@ -361,7 +361,7 @@
 		};
 	};
 
-	gpio-keys {
+	keys {
 		compatible = "gpio-keys";
 		pinctrl-0 = <&button_pins>;
 		pinctrl-names = "default";
@@ -385,7 +385,7 @@
 		};
 	};
 
-	gpio-leds {
+	leds {
 		compatible = "gpio-leds";
 		pinctrl-0 = <&led_pins>;
 		pinctrl-names = "default";

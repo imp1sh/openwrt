@@ -33,7 +33,7 @@
 
 	chosen {
 		bootargs = "rootfstype=squashfs noinitrd";
-		linux,stdout-path = "serial0:115200n8";
+		stdout-path = "serial0:115200n8";
 	};
 
 	soc {
@@ -326,7 +326,7 @@
 		};
 	};
 
-	gpio-keys {
+	keys {
 		compatible = "gpio-keys";
 		pinctrl-0 = <&button_pins>;
 		pinctrl-names = "default";
@@ -350,7 +350,7 @@
 		};
 	};
 
-	gpio-leds {
+	leds {
 		compatible = "gpio-leds";
 		pinctrl-0 = <&led_pins>;
 		pinctrl-names = "default";

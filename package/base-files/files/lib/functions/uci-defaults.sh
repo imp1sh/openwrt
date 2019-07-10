@@ -182,6 +182,19 @@ _ucidef_finish_switch_roles() {
 	done
 }
 
+ucidef_set_ar8xxx_switch_mib() {
+	local name="$1"
+	local type="$2"
+	local interval="$3"
+
+	json_select_object switch
+		json_select_object "$name"
+			json_add_int ar8xxx_mib_type $type
+			json_add_int ar8xxx_mib_poll_interval $interval
+		json_select ..
+	json_select ..
+}
+
 ucidef_add_switch() {
 	local name="$1"; shift
 	local port num role device index need_tag prev_role
@@ -442,11 +455,13 @@ ucidef_set_led_switch() {
 	local trigger_name="$4"
 	local port_mask="$5"
 	local speed_mask="$6"
+	local mode="$7"
 
 	_ucidef_set_led_common "$1" "$2" "$3"
 
 	json_add_string trigger "$trigger_name"
 	json_add_string type switch
+	json_add_string mode "$mode"
 	json_add_string port_mask "$port_mask"
 	json_add_string speed_mask "$speed_mask"
 	json_select ..
@@ -461,6 +476,7 @@ _ucidef_set_led_timer() {
 
 	_ucidef_set_led_common "$1" "$2" "$3"
 
+	json_add_string type "$trigger_name"
 	json_add_string trigger "$trigger_name"
 	json_add_int delayon "$delayon"
 	json_add_int delayoff "$delayoff"
