@@ -86,7 +86,7 @@ endef
 
 define Device/afoundry_ew1200
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := AFOUNDRY
   DEVICE_MODEL := EW1200
   DEVICE_PACKAGES := \
@@ -98,7 +98,7 @@ TARGET_DEVICES += afoundry_ew1200
 
 define Device/asiarf_ap7621-001
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16000k
   DEVICE_VENDOR := AsiaRF
   DEVICE_MODEL := AP7621-001
   DEVICE_PACKAGES := \
@@ -106,10 +106,19 @@ define Device/asiarf_ap7621-001
 endef
 TARGET_DEVICES += asiarf_ap7621-001
 
+define Device/asus_rt-ac57u
+  MTK_SOC := mt7621
+  DEVICE_VENDOR := ASUS
+  DEVICE_MODEL := RT-AC57U
+  IMAGE_SIZE := 16064k
+  DEVICE_PACKAGES := kmod-mt7603 kmod-mt76x2 kmod-usb3 kmod-usb-ledtrig-usbport wpad-basic
+endef
+TARGET_DEVICES += asus_rt-ac57u
+
 define Device/buffalo_wsr-1166dhp
   MTK_SOC := mt7621
   IMAGE/sysupgrade.bin := trx | pad-rootfs | append-metadata
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 15936k
   DEVICE_VENDOR := Buffalo
   DEVICE_MODEL := WSR-1166DHP
   DEVICE_PACKAGES := kmod-mt7603 kmod-mt76x2 wpad-basic
@@ -119,7 +128,7 @@ TARGET_DEVICES += buffalo_wsr-1166dhp
 
 define Device/buffalo_wsr-600dhp
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := Buffalo
   DEVICE_MODEL := WSR-600DHP
   DEVICE_PACKAGES := kmod-mt7603 kmod-rt2800-pci wpad-basic
@@ -133,7 +142,7 @@ define Device/dlink_dir-860l-b1
   BLOCKSIZE := 64k
   SEAMA_SIGNATURE := wrgac13_dlink.2013gui_dir860lb
   KERNEL := kernel-bin | append-dtb | relocate-kernel | lzma | uImage lzma
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := D-Link
   DEVICE_MODEL := DIR-860L
   DEVICE_VARIANT := B1
@@ -144,7 +153,7 @@ TARGET_DEVICES += dlink_dir-860l-b1
 
 define Device/d-team_newifi-d2
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  IMAGE_SIZE := 32448k
   DEVICE_VENDOR := Newifi
   DEVICE_MODEL := D2
   DEVICE_PACKAGES := \
@@ -154,7 +163,7 @@ TARGET_DEVICES += d-team_newifi-d2
 
 define Device/d-team_pbr-m1
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := PandoraBox
   DEVICE_MODEL := PBR-M1
   DEVICE_PACKAGES := \
@@ -172,6 +181,7 @@ define Device/elecom_wrc-1167ghbk2-s
   IMAGES += factory.bin
   IMAGE/factory.bin := $$(sysupgrade_bin) | check-size $$$$(IMAGE_SIZE) |\
     elecom-wrc-factory WRC-1167GHBK2-S 0.00
+  DEVICE_PACKAGES := kmod-mt7615e wpad-basic
 endef
 TARGET_DEVICES += elecom_wrc-1167ghbk2-s
 
@@ -199,7 +209,7 @@ TARGET_DEVICES += elecom_wrc-2533gst
 
 define Device/firefly_firewrt
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := Firefly
   DEVICE_MODEL := FireWRT
   DEVICE_PACKAGES := kmod-mt76x2 kmod-usb3 kmod-usb-ledtrig-usbport wpad-basic
@@ -209,7 +219,7 @@ TARGET_DEVICES += firefly_firewrt
 
 define Device/gehua_ghl-r-001
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  IMAGE_SIZE := 32448k
   DEVICE_VENDOR := GeHua
   DEVICE_MODEL := GHL-R-001
   DEVICE_PACKAGES := \
@@ -222,7 +232,7 @@ define Device/gnubee_gb-pc1
   DEVICE_VENDOR := GnuBee
   DEVICE_MODEL := Personal Cloud One
   DEVICE_PACKAGES := kmod-ata-core kmod-ata-ahci kmod-usb3 kmod-sdhci-mt7620
-  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  IMAGE_SIZE := 32448k
 endef
 TARGET_DEVICES += gnubee_gb-pc1
 
@@ -231,7 +241,7 @@ define Device/gnubee_gb-pc2
   DEVICE_VENDOR := GnuBee
   DEVICE_MODEL := Personal Cloud Two
   DEVICE_PACKAGES := kmod-ata-core kmod-ata-ahci kmod-usb3 kmod-sdhci-mt7620
-  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  IMAGE_SIZE := 32448k
 endef
 TARGET_DEVICES += gnubee_gb-pc2
 
@@ -241,7 +251,7 @@ define Device/hiwifi_hc5962
   PAGESIZE := 2048
   KERNEL_SIZE := 2097152
   UBINIZE_OPTS := -E 5
-  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  IMAGE_SIZE := 32768k
   IMAGES += factory.bin
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
   IMAGE/factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-ubi | check-size $$$$(IMAGE_SIZE)
@@ -265,7 +275,7 @@ TARGET_DEVICES += iodata_wn-ax1167gr
 
 define Device/iodata_wn-gx300gr
   MTK_SOC := mt7621
-  IMAGE_SIZE := 7798784
+  IMAGE_SIZE := 7616k
   DEVICE_VENDOR := I-O DATA
   DEVICE_MODEL := WN-GX300GR
   DEVICE_PACKAGES := kmod-mt7603 wpad-basic
@@ -274,17 +284,18 @@ TARGET_DEVICES += iodata_wn-gx300gr
 
 define Device/lenovo_newifi-d1
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  IMAGE_SIZE := 32448k
   DEVICE_VENDOR := Newifi
   DEVICE_MODEL := D1
   DEVICE_PACKAGES := \
-	kmod-mt7603 kmod-mt76x2 kmod-usb3 kmod-usb-ledtrig-usbport wpad-basic
+	kmod-mt7603 kmod-mt76x2 kmod-usb3 kmod-sdhci-mt7620 kmod-usb-ledtrig-usbport wpad-basic
   SUPPORTED_DEVICES += newifi-d1
 endef
 TARGET_DEVICES += lenovo_newifi-d1
 
 define Device/linksys_re6500
   MTK_SOC := mt7621
+  IMAGE_SIZE := 7872k
   DEVICE_VENDOR := Linksys
   DEVICE_MODEL := RE6500
   DEVICE_PACKAGES := kmod-mt76x2 wpad-basic
@@ -294,7 +305,7 @@ TARGET_DEVICES += linksys_re6500
 
 define Device/mediatek_ap-mt7621a-v60
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_8M)
+  IMAGE_SIZE := 7872k
   DEVICE_VENDOR := Mediatek
   DEVICE_MODEL := AP-MT7621A-V60 EVB
   DEVICE_PACKAGES := kmod-usb3 kmod-sdhci-mt7620 kmod-sound-mt7620
@@ -304,7 +315,7 @@ TARGET_DEVICES += mediatek_ap-mt7621a-v60
 define Device/mediatek_mt7621-eval-board
   MTK_SOC := mt7621
   BLOCKSIZE := 64k
-  IMAGE_SIZE := $(ralink_default_fw_size_4M)
+  IMAGE_SIZE := 15104k
   DEVICE_VENDOR := MediaTek
   DEVICE_MODEL := MT7621 EVB
   SUPPORTED_DEVICES += mt7621
@@ -344,30 +355,17 @@ define Device/mikrotik_rbm33g
 endef
 TARGET_DEVICES += mikrotik_rbm33g
 
-define Device/mqmaker_witi-256m
+define Device/mqmaker_witi
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := MQmaker
   DEVICE_MODEL := WiTi
-  DEVICE_VARIANT := 256MB RAM
   DEVICE_PACKAGES := \
 	kmod-ata-core kmod-ata-ahci kmod-mt76x2 kmod-sdhci-mt7620 kmod-usb3 \
 	kmod-usb-ledtrig-usbport wpad-basic
-  SUPPORTED_DEVICES += witi
+  SUPPORTED_DEVICES += witi mqmaker,witi-256m mqmaker,witi-512m
 endef
-TARGET_DEVICES += mqmaker_witi-256m
-
-define Device/mqmaker_witi-512m
-  MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
-  DEVICE_VENDOR := MQmaker
-  DEVICE_MODEL := WiTi
-  DEVICE_VARIANT := 512MB RAM
-  DEVICE_PACKAGES := \
-	kmod-ata-core kmod-ata-ahci kmod-mt76x2 kmod-sdhci-mt7620 kmod-usb3 \
-	kmod-usb-ledtrig-usbport wpad-basic
-endef
-TARGET_DEVICES += mqmaker_witi-512m
+TARGET_DEVICES += mqmaker_witi
 
 define Device/mtc_wr1201
   MTK_SOC := mt7621
@@ -468,16 +466,17 @@ TARGET_DEVICES += netis_wf-2881
 
 define Device/phicomm_k2p
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 15744k
   DEVICE_VENDOR := Phicomm
   DEVICE_MODEL := K2P
   SUPPORTED_DEVICES += k2p
+  DEVICE_PACKAGES := kmod-mt7615e wpad-basic
 endef
 TARGET_DEVICES += phicomm_k2p
 
 define Device/planex_vr500
   MTK_SOC := mt7621
-  IMAGE_SIZE := 66453504
+  IMAGE_SIZE := 65216k
   DEVICE_VENDOR := Planex
   DEVICE_MODEL := VR500
   DEVICE_PACKAGES := kmod-usb3
@@ -487,7 +486,7 @@ TARGET_DEVICES += planex_vr500
 
 define Device/samknows_whitebox-v8
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := SamKnows
   DEVICE_MODEL := Whitebox 8
   DEVICE_PACKAGES := \
@@ -499,6 +498,7 @@ TARGET_DEVICES += samknows_whitebox-v8
 
 define Device/storylink_sap-g3200u3
   MTK_SOC := mt7621
+  IMAGE_SIZE := 7872k
   DEVICE_VENDOR := STORYLiNK
   DEVICE_MODEL := SAP-G3200U3
   DEVICE_PACKAGES := kmod-mt76x2 kmod-usb3 kmod-usb-ledtrig-usbport wpad-basic
@@ -517,6 +517,7 @@ TARGET_DEVICES += telco-electronics_x1
 
 define Device/thunder_timecloud
   MTK_SOC := mt7621
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := Thunder
   DEVICE_MODEL := Timecloud
   DEVICE_PACKAGES := kmod-usb3
@@ -534,27 +535,44 @@ define Device/totolink_a7000r
 endef
 TARGET_DEVICES += totolink_a7000r
 
-define Device/tplink_re350-v1
+define Device/tplink-safeloader
   MTK_SOC := mt7621
   DEVICE_VENDOR := TP-Link
+  TPLINK_BOARD_ID :=
+  TPLINK_HWID := 0x0
+  TPLINK_HWREV := 0
+  TPLINK_HEADER_VERSION := 1
+  KERNEL := $(KERNEL_DTB) | tplink-v1-header -e -O
+  IMAGES += factory.bin
+  IMAGE/sysupgrade.bin := append-rootfs | tplink-safeloader sysupgrade | \
+	append-metadata | check-size $$$$(IMAGE_SIZE)
+  IMAGE/factory.bin := append-rootfs | tplink-safeloader factory
+endef
+
+define Device/tplink_re350-v1
+  $(Device/tplink-safeloader)
   DEVICE_MODEL := RE350
   DEVICE_VARIANT := v1
   DEVICE_PACKAGES := kmod-mt7603 kmod-mt76x2 wpad-basic
   TPLINK_BOARD_ID := RE350-V1
-  TPLINK_HWID := 0x0
-  TPLINK_HWREV := 0
-  TPLINK_HEADER_VERSION := 1
   IMAGE_SIZE := 6016k
-  KERNEL := $(KERNEL_DTB) | tplink-v1-header -e -O
-  IMAGES += factory.bin
-  IMAGE/sysupgrade.bin := append-rootfs | tplink-safeloader sysupgrade | append-metadata | check-size $$$$(IMAGE_SIZE)
-  IMAGE/factory.bin := append-rootfs | tplink-safeloader factory
   SUPPORTED_DEVICES += re350-v1
 endef
 TARGET_DEVICES += tplink_re350-v1
 
+define Device/tplink_re650-v1
+  $(Device/tplink-safeloader)
+  DEVICE_MODEL := RE650
+  DEVICE_VARIANT := v1
+  DEVICE_PACKAGES := kmod-mt7615e wpad-basic
+  TPLINK_BOARD_ID := RE650-V1
+  IMAGE_SIZE := 14208k
+endef
+TARGET_DEVICES += tplink_re650-v1
+
 define Device/ubiquiti_edgerouterx
   MTK_SOC := mt7621
+  IMAGE_SIZE := 256768k
   FILESYSTEMS := squashfs
   KERNEL_SIZE := 3145728
   KERNEL_INITRAMFS := $$(KERNEL) | ubnt-erx-factory-image $(KDIR)/tmp/$$(KERNEL_INITRAMFS_PREFIX)-factory.tar
@@ -597,7 +615,7 @@ TARGET_DEVICES += unielec_u7621-06-512m-64m
 
 define Device/wevo_11acnas
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := WeVO
   DEVICE_MODEL := 11AC NAS Router
   DEVICE_PACKAGES := kmod-mt7603 kmod-mt76x2 kmod-usb3 kmod-usb-ledtrig-usbport wpad-basic
@@ -607,7 +625,7 @@ TARGET_DEVICES += wevo_11acnas
 
 define Device/wevo_w2914ns-v2
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := WeVO
   DEVICE_MODEL := W2914NS
   DEVICE_VARIANT := v2
@@ -622,7 +640,7 @@ define Device/xiaomi_mir3g
   BLOCKSIZE := 128k
   PAGESIZE := 2048
   KERNEL_SIZE := 4096k
-  IMAGE_SIZE := 32768k
+  IMAGE_SIZE := 124416k
   UBINIZE_OPTS := -E 5
   IMAGES += kernel1.bin rootfs0.bin
   IMAGE/kernel1.bin := append-kernel
@@ -644,7 +662,7 @@ define Device/xiaomi_mir3p
   PAGESIZE := 2048
   KERNEL_SIZE:= 4096k
   UBINIZE_OPTS := -E 5
-  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  IMAGE_SIZE := 255488k
   DEVICE_VENDOR := Xiaomi
   DEVICE_MODEL := Mi Router 3 Pro
   IMAGES += factory.bin
@@ -657,7 +675,7 @@ TARGET_DEVICES += xiaomi_mir3p
 
 define Device/xzwifi_creativebox-v1
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  IMAGE_SIZE := 32448k
   DEVICE_VENDOR := CreativeBox
   DEVICE_MODEL := v1
   DEVICE_PACKAGES := \
@@ -678,7 +696,7 @@ TARGET_DEVICES += youhua_wr1200js
 
 define Device/youku_yk-l2
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := Youku
   DEVICE_MODEL := YK-L2
   DEVICE_PACKAGES := \
@@ -688,7 +706,7 @@ TARGET_DEVICES += youku_yk-l2
 
 define Device/zbtlink_zbt-we1326
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := ZBT
   DEVICE_MODEL := ZBT-WE1326
   DEVICE_PACKAGES := \
@@ -699,7 +717,7 @@ TARGET_DEVICES += zbtlink_zbt-we1326
 
 define Device/zbtlink_zbt-we3526
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := ZBT
   DEVICE_MODEL := ZBT-WE3526
   DEVICE_PACKAGES := \
@@ -710,7 +728,7 @@ TARGET_DEVICES += zbtlink_zbt-we3526
 
 define Device/zbtlink_zbt-wg2626
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := ZBT
   DEVICE_MODEL := ZBT-WG2626
   DEVICE_PACKAGES := \
@@ -722,7 +740,7 @@ TARGET_DEVICES += zbtlink_zbt-wg2626
 
 define Device/zbtlink_zbt-wg3526-16m
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 16064k
   DEVICE_VENDOR := ZBT
   DEVICE_MODEL := ZBT-WG3526
   DEVICE_VARIANT := 16M
@@ -735,7 +753,7 @@ TARGET_DEVICES += zbtlink_zbt-wg3526-16m
 
 define Device/zbtlink_zbt-wg3526-32m
   MTK_SOC := mt7621
-  IMAGE_SIZE := $(ralink_default_fw_size_32M)
+  IMAGE_SIZE := 32448k
   DEVICE_VENDOR := ZBT
   DEVICE_MODEL := ZBT-WG3526
   DEVICE_VARIANT := 32M

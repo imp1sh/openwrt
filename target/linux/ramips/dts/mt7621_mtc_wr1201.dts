@@ -16,11 +16,6 @@
 		led-upgrade = &led_power;
 	};
 
-	memory@0 {
-		device_type = "memory";
-		reg = <0x0 0x8000000>;
-	};
-
 	chosen {
 		bootargs = "console=ttyS0,57600";
 	};
@@ -89,7 +84,7 @@
 			};
 
 			factory: partition@40000 {
-				label = "Factory";
+				label = "factory";
 				reg = <0x40000 0x10000>;
 				read-only;
 			};
